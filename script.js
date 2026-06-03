@@ -1,0 +1,263 @@
+const profileLinks = {
+  github: "https://github.com/rhyan-rpone",
+  linkedin: "https://www.linkedin.com/in/rhyan-pablo-40360320a/",
+};
+
+const projects = [
+  {
+    title: "Aura Agent",
+    area: "Agentes",
+    type: "GenAI",
+    category: "genai",
+    impact: "Notebook de agente com foco em orquestração e fluxos inteligentes.",
+    description:
+      "Projeto em notebook para experimentar a construção de um agente de IA, conectando raciocínio, ferramentas e fluxo de execução em uma estrutura prática de prototipação.",
+    stack: "Python · LangGraph · LLM Agents · Notebook",
+    repoUrl:
+      "https://github.com/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/Aura_Agent.ipynb",
+  },
+  {
+    title: "Data Science aplicado a Recursos Humanos",
+    area: "People Analytics",
+    type: "Data Science",
+    category: "ds",
+    impact: "Exploração e modelagem de dados de RH para extrair padrões acionáveis.",
+    description:
+      "Projeto de Data Science em RH com análise exploratória, preparação de dados e investigação de variáveis ligadas a comportamento, retenção e decisões de gestão.",
+    stack: "Python · Pandas · Data Science · People Analytics",
+    repoUrl:
+      "https://github.com/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/DataScience_Recursos_Humanos.ipynb",
+  },
+  {
+    title: "Random Forest para Diabetes",
+    area: "Saúde",
+    type: "Machine Learning",
+    category: "ml",
+    impact: "Modelo supervisionado para classificação preditiva em dados de saúde.",
+    description:
+      "Notebook de Machine Learning usando Random Forest para trabalhar previsão/classificação de diabetes, com preparação de dados, treinamento e avaliação do modelo.",
+    stack: "Python · Scikit-learn · Random Forest · Classification",
+    repoUrl:
+      "https://github.com/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/RandomForest_Diabetes.ipynb",
+  },
+  {
+    title: "Análise de Tempo de Uso em Social Media",
+    area: "Social Media",
+    type: "Data Analysis",
+    category: "data",
+    impact: "Investigação de padrões digitais entre jovens e adolescentes.",
+    description:
+      "Análise exploratória sobre tempo de uso de redes sociais por jovens e adolescentes, buscando padrões de comportamento, distribuição e possíveis relações entre variáveis.",
+    stack: "Python · Pandas · EDA · Data Visualization",
+    repoUrl:
+      "https://github.com/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/Analise_Social_Media_Tempo_de_Uso_Jovens_e_Adolescentes.ipynb",
+  },
+  {
+    title: "Análise do Mercado de Games",
+    area: "Games",
+    type: "Data Analysis",
+    category: "data",
+    impact: "Exploração de dados de mercado para entender desempenho e tendências.",
+    description:
+      "Notebook de análise de mercado de games, com foco em leitura de categorias, comportamento dos dados e visualizações para apoiar interpretação de tendências.",
+    stack: "Python · Pandas · EDA · Market Analysis",
+    repoUrl:
+      "https://github.com/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/An%C3%A1lise_Mercado_Games.ipynb",
+  },
+  {
+    title: "Social Media Analysis",
+    area: "Marketing",
+    type: "Data Analysis",
+    category: "data",
+    impact: "Análise de posts e engajamento em redes sociais.",
+    description:
+      "Projeto de análise de dados de social media para avaliar posts, engajamento e comportamento de performance em redes sociais.",
+    stack: "Python · Pandas · Social Media Analytics · Data Visualization",
+    repoUrl:
+      "https://github.com/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/Social_Media_Analysis.ipynb",
+  },
+];
+
+const grid = document.querySelector("#projectGrid");
+const filterButtons = document.querySelectorAll("[data-filter]");
+const revealTargets = document.querySelectorAll(
+  ".section-heading, .about-copy, .competencies, .stack-block, .featured-carousel, .certificate-grid, .contact-list, .contact-form",
+);
+const featuredCarousel = document.querySelector("[data-featured-carousel]");
+
+const revealObserver =
+  "IntersectionObserver" in window
+    ? new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -12% 0px", threshold: 0.14 },
+      )
+    : null;
+
+function observeReveal(element) {
+  element.classList.add("reveal");
+
+  if (!revealObserver) {
+    element.classList.add("is-visible");
+    return;
+  }
+
+  revealObserver.observe(element);
+}
+
+function projectCard(project) {
+  const article = document.createElement("article");
+  article.className = "project-card";
+  article.dataset.category = project.category;
+
+  const meta = document.createElement("div");
+  meta.className = "project-meta";
+
+  [project.area, project.type].forEach((label) => {
+    const tag = document.createElement("span");
+    tag.className = "project-kicker";
+    tag.textContent = label;
+    meta.append(tag);
+  });
+
+  const title = document.createElement("h3");
+  title.textContent = project.title;
+
+  const impact = document.createElement("p");
+  impact.className = "project-impact";
+  impact.textContent = project.impact;
+
+  const description = document.createElement("p");
+  description.className = "project-description";
+  description.textContent = project.description;
+
+  const stack = document.createElement("p");
+  stack.className = "project-stack";
+  stack.textContent = project.stack;
+
+  article.append(meta, title, impact, description, stack);
+
+  if (project.repoUrl) {
+    const link = document.createElement("a");
+    link.className = "project-link";
+    link.href = project.repoUrl;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.textContent = "Abrir notebook";
+    article.append(link);
+  }
+
+  return article;
+}
+
+function renderProjects(filter = "todos") {
+  const filtered =
+    filter === "todos" ? projects : projects.filter((project) => project.category === filter);
+
+  grid.replaceChildren(...filtered.map(projectCard));
+  grid.querySelectorAll(".project-card").forEach(observeReveal);
+}
+
+function setActiveFilter(activeButton) {
+  filterButtons.forEach((button) => {
+    const isActive = button === activeButton;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function applyProfileLinks() {
+  document.querySelectorAll("[data-link]").forEach((anchor) => {
+    const key = anchor.dataset.link;
+    const href = profileLinks[key];
+
+    if (href) {
+      anchor.href = href;
+      anchor.target = "_blank";
+      anchor.classList.remove("is-disabled");
+      anchor.removeAttribute("aria-disabled");
+      return;
+    }
+
+    anchor.href = "#contato";
+    anchor.removeAttribute("target");
+    anchor.classList.add("is-disabled");
+    anchor.setAttribute("aria-disabled", "true");
+  });
+}
+
+function setupFeaturedCarousel() {
+  if (!featuredCarousel) {
+    return;
+  }
+
+  const slides = Array.from(featuredCarousel.querySelectorAll("[data-featured-slide]"));
+  const prevButton = featuredCarousel.querySelector("[data-featured-prev]");
+  const nextButton = featuredCarousel.querySelector("[data-featured-next]");
+  const current = featuredCarousel.querySelector("[data-featured-current]");
+  const total = featuredCarousel.querySelector("[data-featured-total]");
+  let activeIndex = 0;
+
+  if (!slides.length || !prevButton || !nextButton || !current || !total) {
+    return;
+  }
+
+  total.textContent = String(slides.length).padStart(2, "0");
+
+  function renderSlide(index) {
+    activeIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === activeIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
+    });
+
+    current.textContent = String(activeIndex + 1).padStart(2, "0");
+  }
+
+  prevButton.addEventListener("click", () => renderSlide(activeIndex - 1));
+  nextButton.addEventListener("click", () => renderSlide(activeIndex + 1));
+
+  featuredCarousel.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      renderSlide(activeIndex - 1);
+    }
+
+    if (event.key === "ArrowRight") {
+      renderSlide(activeIndex + 1);
+    }
+  });
+
+  renderSlide(0);
+}
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setActiveFilter(button);
+    renderProjects(button.dataset.filter);
+  });
+});
+
+applyProfileLinks();
+setupFeaturedCarousel();
+revealTargets.forEach(observeReveal);
+renderProjects();
+
+document.addEventListener("click", (event) => {
+  if (!(event.target instanceof Element)) {
+    return;
+  }
+
+  const disabledLink = event.target.closest("a.is-disabled");
+
+  if (disabledLink) {
+    event.preventDefault();
+  }
+});

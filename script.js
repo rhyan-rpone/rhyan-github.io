@@ -272,6 +272,7 @@ filterButtons.forEach((button) => {
 applyProfileLinks();
 setupFeaturedCarousel();
 revealTargets.forEach(observeReveal);
+renderApps();
 renderProjects();
 
 document.addEventListener("click", (event) => {

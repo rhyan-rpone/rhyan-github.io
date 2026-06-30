@@ -1177,3 +1177,5 @@ textarea {
     transform: none !important;
   }
 }
+
+.projects-subsection + .projects-subsection{margin-top:80px;padding-top:60px;border-top:1px solid var(--line);}

@@ -76,6 +76,30 @@ const projects = [
     repoUrl:
       "https://github.com/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/Social_Media_Analysis.ipynb",
   },
+  {
+    title: "Segmentação de Clientes com K-Means",
+    area: "Marketing",
+    type: "Data Science",
+    category: "ds",
+    impact: "Clusters de clientes gerados com K-Means para estratégias de marketing direcionadas.",
+    description:
+      "Análise e segmentação de clientes de campanhas de marketing utilizando K-Means, com EDA completa, definição do número ideal de clusters e interpretação dos perfis gerados para apoiar decisões de negócio.",
+    stack: "Python · Scikit-learn · K-Means · EDA · Data Visualization",
+    repoUrl:
+      "https://colab.research.google.com/github/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/marketing_campaign_k_means_eda.ipynb",
+  },
+  {
+    title: "Previsão de Vendas com Facebook Prophet",
+    area: "Varejo",
+    type: "Data Science",
+    category: "ds",
+    impact: "Forecast de vendas de uma rede de lojas com modelo de série temporal.",
+    description:
+      "Previsão de vendas de uma rede de lojas utilizando Facebook Prophet, com análise exploratória dos dados históricos, tunagem do modelo e projeções de demanda para apoiar planejamento operacional e estoque.",
+    stack: "Python · Facebook Prophet · Time Series · EDA · Forecasting",
+    repoUrl:
+      "https://colab.research.google.com/github/rhyan-rpone/ai-and-data_analysis-notebooks/blob/main/enterprise_sales_predict.ipynb",
+  },
 ];
 
 const grid = document.querySelector("#projectGrid");

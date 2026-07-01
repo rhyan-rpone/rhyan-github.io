@@ -633,6 +633,13 @@ textarea {
   transform: translateY(-1px);
 }
 
+.app-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
 .project-grid {
   display: grid;
   gap: 18px;
@@ -1356,3 +1363,5 @@ textarea {
     transform: none !important;
   }
 }
+
+.projects-subsection + .projects-subsection{margin-top:80px;padding-top:60px;border-top:1px solid var(--line);}

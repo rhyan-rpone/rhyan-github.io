@@ -138,6 +138,7 @@ const projects = [
 
 const appGrid = document.querySelector("#appGrid");
 const grid = document.querySelector("#projectGrid");
+const appGrid = document.querySelector("#appGrid");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const revealTargets = document.querySelectorAll(
   ".section-heading, .about-copy, .competencies, .stack-block, .featured-carousel, .certificate-grid, .contact-list, .contact-form",
@@ -263,6 +264,69 @@ function projectCard(project) {
   }
 
   return article;
+}
+
+const apps = [
+  {
+    title: "Agência de Marketing com Agentes IA",
+    area: "Agentes IA",
+    type: "GenAI",
+    impact: "Plataforma de automação para campanhas de marketing com agentes inteligentes.",
+    description:
+      "Aplicação completa para gerenciar estratégias de marketing, geração de conteúdo e automação de fluxos com IA.",
+    stack: "JavaScript · LangChain · AI Agents · Automação · APIs",
+  },
+  {
+    title: "Time de Dados com Agentes IA",
+    area: "Data Ops",
+    type: "GenAI",
+    impact: "Operação de dados assistida por agentes para acelerar análises e tarefas repetitivas.",
+    description:
+      "Sistema de apoio à equipe de dados que integra agentes inteligentes a pipelines, relatórios e processos analíticos.",
+    stack: "Python · AI Agents · ETL · Data Analytics · Orquestração",
+  },
+];
+
+function appCard(app) {
+  const article = document.createElement("article");
+  article.className = "project-card app-card";
+
+  const meta = document.createElement("div");
+  meta.className = "project-meta";
+
+  [app.area, app.type].forEach((label) => {
+    const tag = document.createElement("span");
+    tag.className = "project-kicker";
+    tag.textContent = label;
+    meta.append(tag);
+  });
+
+  const title = document.createElement("h3");
+  title.textContent = app.title;
+
+  const impact = document.createElement("p");
+  impact.className = "project-impact";
+  impact.textContent = app.impact;
+
+  const description = document.createElement("p");
+  description.className = "project-description";
+  description.textContent = app.description;
+
+  const stack = document.createElement("p");
+  stack.className = "project-stack";
+  stack.textContent = app.stack;
+
+  article.append(meta, title, impact, description, stack);
+  return article;
+}
+
+function renderApps() {
+  if (!appGrid) {
+    return;
+  }
+
+  appGrid.replaceChildren(...apps.map(appCard));
+  appGrid.querySelectorAll(".app-card").forEach(observeReveal);
 }
 
 function renderProjects(filter = "todos") {

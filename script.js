@@ -421,9 +421,9 @@ filterButtons.forEach((button) => {
 
 applyProfileLinks();
 setupFeaturedCarousel();
-revealTargets.forEach(observeReveal);
 renderApps();
 renderProjects();
+revealTargets.forEach(observeReveal);
 
 document.addEventListener("click", (event) => {
   if (!(event.target instanceof Element)) {
